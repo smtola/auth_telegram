@@ -15,7 +15,7 @@ interface TelegramUser {
 
 const LoginPage: React.FC = () => {
   const [user, setUser] = useState<TelegramUser | null>(null);
-
+console.log(user);
   const handleTelegramAuth = async (user: TelegramUser)  =>  {
     console.log("Telegram User Authenticated:", user);
     setUser(user);

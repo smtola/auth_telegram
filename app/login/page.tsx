@@ -16,9 +16,15 @@ interface TelegramUser {
 const LoginPage: React.FC = () => {
   const [user, setUser] = useState<TelegramUser | null>(null);
 
-  const handleTelegramAuth = (user: TelegramUser) => {
+  const handleTelegramAuth = async (user: TelegramUser)  =>  {
     console.log("Telegram User Authenticated:", user);
     setUser(user);
+
+    await fetch("/api/notify-user", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  });
 
     // Redirect the user to your Telegram bot
     const botUsername = "harula_bot"; // Replace with your bot's username

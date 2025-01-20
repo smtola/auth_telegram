@@ -15,14 +15,13 @@ interface TelegramUser {
 
 const LoginPage: React.FC = () => {
   const [user, setUser] = useState<TelegramUser | null>(null);
-  const [serverMessage, setServerMessage] = useState<string | null>(null); // State for server messages
-  const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
+  const [serverMessage, setServerMessage] = useState<string | null>(null); 
 
   const handleTelegramAuth = async (user: TelegramUser) => {
     console.log("Telegram User Authenticated:", user);
     setUser(user);
 
-    const getUpdateUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates`;
+    const getUpdateUrl = `https://api.telegram.org/bot7786727966:AAENBDXFKdVcYAPYkKFkpEta2-UlvoyB1q0/getUpdates`;
     const updateResponse = await fetch(getUpdateUrl);
     const updateData = await updateResponse.json();
 
@@ -35,28 +34,23 @@ const LoginPage: React.FC = () => {
       return;
     }
 
-    try {
-      // Send user data to the API
-      const response = await fetch("/api/notify-user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user, messageText }),
-      });
+   try {
+  const response = await fetch("/api/notify-user", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user, messageText }),
+  });
+  const responseData = await response.json();
 
-      const responseData = await response.json();
-
-      // Set server response messages based on status
-      if (response.ok) {
-        setServerMessage(responseData.message || "Action completed successfully.");
-      } else if (response.status === 404) {
-        setServerMessage(responseData.message || "User not found.");
-      } else {
-        setServerMessage("An unexpected error occurred.");
-      }
-    } catch (error) {
-      console.error("Error notifying user:", error);
-      setServerMessage("Failed to communicate with the server.");
-    }
+  if (response.ok) {
+    setServerMessage(responseData.message || "Message sent successfully.");
+  } else {
+    setServerMessage(responseData.message || "Failed to process request.");
+  }
+} catch (error) {
+  console.error("Error sending data to server:", error);
+  setServerMessage("Server communication failed.");
+}
   };
 
   return (

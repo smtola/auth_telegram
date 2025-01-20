@@ -1,4 +1,3 @@
-'use client'
 import { useEffect } from "react";
 
 interface TelegramLoginProps {
@@ -16,10 +15,7 @@ interface TelegramUser {
   hash: string;
 }
 
-const TelegramLogin: React.FC<TelegramLoginProps> = ({
-  botUsername,
-  onAuth,
-}) => {
+const TelegramLogin: React.FC<TelegramLoginProps> = ({ botUsername, onAuth }) => {
   useEffect(() => {
     // Dynamically load the Telegram widget script
     const script = document.createElement("script");

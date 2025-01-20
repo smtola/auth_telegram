@@ -19,6 +19,11 @@ const LoginPage: React.FC = () => {
   const handleTelegramAuth = (user: TelegramUser) => {
     console.log("Telegram User Authenticated:", user);
     setUser(user);
+
+    // Redirect the user to your Telegram bot
+    const botUsername = "harula_bot"; // Replace with your bot's username
+    const deepLinkUrl = `https://t.me/${botUsername}`;
+    window.location.href = deepLinkUrl;
   };
 
   return (

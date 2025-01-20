@@ -15,15 +15,22 @@ interface TelegramUser {
 
 const LoginPage: React.FC = () => {
   const [user, setUser] = useState<TelegramUser | null>(null);
-
+  const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
   const handleTelegramAuth = async (user: TelegramUser)  =>  {
     console.log("Telegram User Authenticated:", user);
     setUser(user);
+    const getUpdateUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates`;
+    const updateResponse = await fetch(getUpdateUrl);
+    const updateData = await updateResponse.json();
+
+      // Check if the latest message is "/start"
+    const latestUpdate = updateData.result[updateData.result.length - 1];
+    const messageText = latestUpdate.message?.text;
 
     await fetch("/api/notify-user", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
+    body: JSON.stringify({user,messageText}),
   });
 
     // Redirect the user to your Telegram bot

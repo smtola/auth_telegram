@@ -27,9 +27,9 @@ console.log(user);
   });
 
     // Redirect the user to your Telegram bot
-    // const botUsername = "harula_bot"; 
-    // const deepLinkUrl = `https://t.me/${botUsername}`;
-    // window.location.href = deepLinkUrl;
+    const botUsername = "harula_bot"; 
+    const deepLinkUrl = `https://t.me/${botUsername}`;
+    window.location.href = deepLinkUrl;
   };
 
     const handleLogout = () => {

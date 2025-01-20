@@ -15,7 +15,7 @@ interface TelegramUser {
 
 const LoginPage: React.FC = () => {
   const [user, setUser] = useState<TelegramUser | null>(null);
-console.log(user);
+
   const handleTelegramAuth = async (user: TelegramUser)  =>  {
     console.log("Telegram User Authenticated:", user);
     setUser(user);
@@ -27,21 +27,14 @@ console.log(user);
   });
 
     // Redirect the user to your Telegram bot
-    const botUsername = "harula_bot"; 
+    const botUsername = "harula_bot"; // Replace with your bot's username
     const deepLinkUrl = `https://t.me/${botUsername}`;
     window.location.href = deepLinkUrl;
   };
 
-    const handleLogout = () => {
-    // Clear user data
-    setUser(null);
-
-    // Optionally, redirect to a login page or perform other actions
-    // window.location.href = "/login"; // Redirect to login page if needed
-  };
-
   return (
     <div className="container">
+      <h1>Login with Telegram</h1>
       {user ? (
         <div>
           <h2>Welcome, {user.first_name}</h2>
@@ -50,9 +43,6 @@ console.log(user);
           )}
           <p>Username: {user.username}</p>
           <p>Auth Date: {new Date(user.auth_date * 1000).toLocaleString()}</p>
-          <button onClick={handleLogout} className="logout-button">
-            Logout
-          </button>
         </div>
       ) : (
         <TelegramLogin

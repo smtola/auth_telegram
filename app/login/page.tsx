@@ -32,6 +32,14 @@ const LoginPage: React.FC = () => {
     window.location.href = deepLinkUrl;
   };
 
+    const handleLogout = () => {
+    // Clear user data
+    setUser(null);
+
+    // Optionally, redirect to a login page or perform other actions
+    // window.location.href = "/login"; // Redirect to login page if needed
+  };
+
   return (
     <div className="container">
       <h1>Login with Telegram</h1>
@@ -43,6 +51,9 @@ const LoginPage: React.FC = () => {
           )}
           <p>Username: {user.username}</p>
           <p>Auth Date: {new Date(user.auth_date * 1000).toLocaleString()}</p>
+          <button onClick={handleLogout} className="logout-button">
+            Logout
+          </button>
         </div>
       ) : (
         <TelegramLogin

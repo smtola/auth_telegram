@@ -10,20 +10,16 @@ export default async function handler(
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { message } = req.body; // Extract message object from the request
+  const { id, first_name, text } = req.body; // Extract user info and message text from the request
 
-  if (!message || !message.text || !message.chat || !message.chat.id) {
-    return res.status(400).json({ error: "User not found" }); // User not found error
+  if (!id) {
+    return res.status(400).json({ error: "Invalid user data" });
   }
-
-  const { id } = message.chat;
-  const { first_name } = message.chat;
-  const text = message.text;
 
   try {
     // Check if the message text is '/start'
     if (text === "/start") {
-      const welcomeMessage = `Hello ${first_name}, welcome to our bot!`;
+      const message = `Hello ${first_name}, welcome to our bot!`;
 
       const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
@@ -32,7 +28,7 @@ export default async function handler(
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: id,
-          text: welcomeMessage,
+          text: message,
         }),
       });
 
@@ -45,7 +41,6 @@ export default async function handler(
         .json({ success: true, message: "Welcome message sent" });
     }
 
-    // Handle other messages if necessary
     return res.status(200).json({ success: true, message: "No action taken" });
   } catch (error) {
     console.error("Error sending Telegram message:", error);

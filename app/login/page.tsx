@@ -16,15 +16,15 @@ interface TelegramUser {
 const LoginPage: React.FC = () => {
   const [user, setUser] = useState<TelegramUser | null>(null);
 
-  const handleTelegramAuth = async (user: TelegramUser) => {
+  const handleTelegramAuth = async (user: TelegramUser)  =>  {
     console.log("Telegram User Authenticated:", user);
     setUser(user);
 
     await fetch("/api/notify-user", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
-    });
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  });
 
     // Redirect the user to your Telegram bot
     const botUsername = "harula_bot"; // Replace with your bot's username
@@ -32,12 +32,12 @@ const LoginPage: React.FC = () => {
     window.location.href = deepLinkUrl;
   };
 
-  const handleLogout = () => {
+    const handleLogout = () => {
     // Clear user data
     setUser(null);
 
-    // Optionally, you can redirect the user to another page after logout
-    // window.location.href = "/login"; // Uncomment to redirect after logout
+    // Optionally, redirect to a login page or perform other actions
+    // window.location.href = "/login"; // Redirect to login page if needed
   };
 
   return (
@@ -55,13 +55,10 @@ const LoginPage: React.FC = () => {
           </button>
         </div>
       ) : (
-        <div>
-          <h2>Please log in with Telegram</h2>
-          <TelegramLogin
-            botUsername="harula_bot" // Replace with your bot's username
-            onAuth={handleTelegramAuth}
-          />
-        </div>
+        <TelegramLogin
+          botUsername="harula_bot" // Replace with your bot's username
+          onAuth={handleTelegramAuth}
+        />
       )}
     </div>
   );

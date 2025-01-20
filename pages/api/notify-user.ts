@@ -28,31 +28,29 @@ export default async function handler(
     }
 
     // Check if the latest message is "/start"
-    const latestUpdate = updateData.result[updateData.result.length - 1];
-    const messageText = latestUpdate.message?.text;
+    // const latestUpdate = updateData.result[updateData.result.length - 1];
+    // const messageText = latestUpdate.message?.text;
 
-    if (messageText === "/start") {
-      const message = `Hello ${first_name}, welcome to our bot!`;
+        const message = `Hello ${first_name}, welcome to our bot!`;
 
-      const sendMessageUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        const sendMessageUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
-      const sendResponse = await fetch(sendMessageUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: id,
-          text: message,
-        }),
-      });
+        const sendResponse = await fetch(sendMessageUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: id,
+            text: message,
+          }),
+        });
 
-      if (!sendResponse.ok) {
-        throw new Error("Failed to send Telegram message");
-      }
+        if (!sendResponse.ok) {
+          throw new Error("Failed to send Telegram message");
+        }
 
-      return res
-        .status(200)
-        .json({ success: true, message: "Welcome message sent" });
-    }
+        return res
+          .status(200)
+          .json({ success: true, message: "Welcome message sent" });
 
     return res.status(200).json({ success: true, message: "No action taken" });
   } catch (error) {

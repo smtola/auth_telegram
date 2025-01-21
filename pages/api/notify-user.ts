@@ -7,8 +7,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
    if (req.method === "POST") {
-     const { message } = req.body;
-console.log(message)
+     const {user, message } = req.body;
+      console.log(user);
      if (message && message.text === "/start") {
        const chatId = message.chat.id;
        const userName = message.from.first_name || "there";

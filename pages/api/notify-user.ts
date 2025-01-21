@@ -12,7 +12,7 @@ export default async function handler(
        const chatId = message.chat.id;
        const userName = message.from.first_name || "there";
 
-       if (chatId !== "") {
+       if (chatId) {
          // Respond to the user
          const responseMessage = `Hello, ${userName} ${chatId}! Welcome to my bot. How can I assist you today?`;
 

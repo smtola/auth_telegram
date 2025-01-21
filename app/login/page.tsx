@@ -28,7 +28,7 @@ const LoginPage: React.FC = () => {
     // Check if the latest message is "/start"
     const latestUpdate = updateData.result[updateData.result.length - 1];
     const messageText = latestUpdate?.message?.text;
-
+ 
     if (!messageText) {
       setServerMessage("No message detected.");
       return;
@@ -38,10 +38,10 @@ const LoginPage: React.FC = () => {
   const response = await fetch("/api/notify-user", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user, messageText }),
+    body: JSON.stringify({ user, message: messageText}),
   });
   const responseData = await response.json();
-
+console.log("Telegram Updates:", responseData);
   if (response.ok) {
     setServerMessage(responseData.message || "Message sent successfully.");
   } else {
@@ -77,6 +77,20 @@ const LoginPage: React.FC = () => {
           <p>{serverMessage}</p>
         </div>
       )}
+
+      {/* <button onClick={() => handleTelegramAuth(
+        {
+          id: 0, // Replace with your chat ID
+          first_name: "John Doe", // Replace with your first name
+          last_name: "Doe",
+          username: "john_doe",
+          photo_url: "https://example.com/profile_photo.jpg",
+          auth_date: Date.now() / 1000,
+          hash: "abc123",
+        }
+      )}>
+        click me
+      </button> */}
     </div>
   );
 };

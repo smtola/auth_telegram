@@ -7,14 +7,17 @@ export default async function handler(
   res: NextApiResponse
 ) {
    if (req.method === "POST") {
-     const { message } = req.body;
+     const { message, user } = req.body;
      if (message && message.text === "/start") {
        const chatId = message.chat.id;
-       const userName = message.from.first_name || "there";
+       const userName = message.from.username || "there";
 
-       if (chatId) {
+       if (chatId === user.id) {
          // Respond to the user
-         const responseMessage = `Hello, ${userName} ${chatId}! Welcome to my bot. How can I assist you today?`;
+         const responseMessage = `
+         Hello, ${userName},  ${chatId}
+         Userid :  ${user.id}
+         Welcome to my bot. How can I assist you today?`;
 
          // Send the message using Telegram's API
          const apiUrl = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;

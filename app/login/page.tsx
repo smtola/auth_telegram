@@ -35,14 +35,9 @@ const LoginPage: React.FC = () => {
     const response = await fetch("/api/notify-user", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      user: {
-      id: user.id,
-      first_name: user.first_name,
-      last_name: user.last_name || "",
-      username: user.username || "",
-    }
-    }),
+    body: JSON.stringify(
+      user
+    ),
   });
 
   const responseData = await response.json();

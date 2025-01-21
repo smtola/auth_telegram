@@ -8,7 +8,8 @@ export default async function handler(
 ) {
    if (req.method === "POST") {
      const { user,message } = req.body;
-
+     console.log(message);
+      console.log(user);
      if (message && message.text === "/start") {
        const chatId = user.id;
        const userName = user.username || "there";
@@ -51,6 +52,7 @@ export default async function handler(
      } else {
        res.status(200).json({ message: "No action taken" });
      }
+     res.status(200).json({ message: "No action taken" });
    } else {
      res.status(405).json({ error: "Method not allowed" });
    }

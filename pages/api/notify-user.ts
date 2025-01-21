@@ -7,33 +7,46 @@ export default async function handler(
   res: NextApiResponse
 ) {
    if (req.method === "POST") {
-     const {user, message } = req.body;
-      console.log(user);
+     const { message } = req.body;
      if (message && message.text === "/start") {
        const chatId = message.chat.id;
        const userName = message.from.first_name || "there";
 
-       // Respond to the user
-       const responseMessage = `Hello, ${userName}! Welcome to my bot. How can I assist you today?
-       ${user.first_name} 
-       ${user.last_name} 
-       ${user.username} 
-       ${user.id}
-       `;
+       if (chatId) {
+         // Respond to the user
+         const responseMessage = `Hello, ${userName}! Welcome to my bot. How can I assist you today?`;
 
-       // Send the message using Telegram's API
-       const apiUrl = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
+         // Send the message using Telegram's API
+         const apiUrl = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
 
-       await fetch(apiUrl, {
-         method: "POST",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify({
-           chat_id: chatId,
-           text: responseMessage,
-         }),
-       });
+         await fetch(apiUrl, {
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify({
+             chat_id: chatId,
+             text: responseMessage,
+           }),
+         });
 
-       res.status(200).json({ success: true });
+         res.status(200).json({ success: true });
+       } else {
+           const responseMessage = `Oops!, User not found!`;
+
+           // Send the message using Telegram's API
+           const apiUrl = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+           await fetch(apiUrl, {
+             method: "POST",
+             headers: { "Content-Type": "application/json" },
+             body: JSON.stringify({
+               chat_id: chatId,
+               text: responseMessage,
+             }),
+           });
+
+           res.status(200).json({ success: true });
+       }
+       return;
      } else {
        res.status(200).json({ message: "No action taken" });
      }

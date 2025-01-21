@@ -16,7 +16,8 @@ interface TelegramUser {
 const LoginPage: React.FC = () => {
   const [user, setUser] = useState<TelegramUser | null>(null);
   const [serverMessage, setServerMessage] = useState<string | null>(null); 
-const [command, setCommand] = useState<string | null>(null);
+  const [command, setCommand] = useState<string | null>(null);
+  console.log("Command:", command);
   useEffect(()  =>  {
     const fetchCommand = async () => {
        const getUpdateUrl = `https://api.telegram.org/bot7786727966:AAENBDXFKdVcYAPYkKFkpEta2-UlvoyB1q0/getUpdates`;

@@ -23,10 +23,11 @@ const LoginPage: React.FC = () => {
    const getUpdateUrl = `https://api.telegram.org/bot7786727966:AAENBDXFKdVcYAPYkKFkpEta2-UlvoyB1q0/getUpdates`;
         const updateResponse = await fetch(getUpdateUrl);
         const updateData = await updateResponse.json();
-
+console.log("Telegram latestUpdate:", updateData);
     // Check if the latest message is "/start"
     const latestUpdate = updateData.result[updateData.result.length + 1];
     const messageText = latestUpdate?.message?.text;
+    console.log("Telegram latestUpdate:", latestUpdate);
     console.log("Telegram Updates:", messageText);
     if (!messageText) {
       setServerMessage("No message detected.");

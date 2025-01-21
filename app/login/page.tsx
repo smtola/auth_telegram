@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
     const updateData = await updateResponse.json();
 
     // Check if the latest message is "/start"
-    const latestUpdate = updateData.result[updateData.result.length - 1];
+    const latestUpdate = updateData.result[updateData.result.length + 1];
     const messageText = latestUpdate?.message?.text;
  
     if (!messageText) {

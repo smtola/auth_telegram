@@ -20,10 +20,10 @@ const LoginPage: React.FC = () => {
   const handleTelegramAuth = async (user: TelegramUser) => {
     console.log("Telegram User Authenticated:", user);
     setUser(user);
-   const getUpdateUrl = `https://api.telegram.org/bot7786727966:AAENBDXFKdVcYAPYkKFkpEta2-UlvoyB1q0/getWebhookInfo`;
+   const getUpdateUrl = `https://api.telegram.org/bot7786727966:AAENBDXFKdVcYAPYkKFkpEta2-UlvoyB1q0/getUpdates`;
         const updateResponse = await fetch(getUpdateUrl);
         const updateData = await updateResponse.json();
-console.log("Telegram Updates:", updateData);
+
     // Check if the latest message is "/start"
     const latestUpdate = updateData.result[updateData.result.length + 1];
       const messageText = latestUpdate?.message?.text;

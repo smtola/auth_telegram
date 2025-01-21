@@ -25,7 +25,7 @@ const LoginPage: React.FC = () => {
         const updateData = await updateResponse.json();
 console.log("Telegram updateResponse:", updateData.result[1]);
     // Check if the latest message is "/start"
-    const latestUpdate = updateData.result[updateData.result.length + 1];
+    const latestUpdate = updateData.result[updateData.result.length - 1];
     const messageText = latestUpdate?.message?.text;
     console.log("Telegram latestUpdate:", latestUpdate);
     console.log("Telegram Updates:", messageText);

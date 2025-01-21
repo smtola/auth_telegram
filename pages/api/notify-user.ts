@@ -10,23 +10,23 @@ export default async function handler(
      return res.status(405).json({ error: "Method not allowed" });
    }
 
-   const { id, first_name, messageText } = req.body;
+   const { user, message } = req.body;
 
-   if (!id || !messageText) {
+   if (!user || !message) {
      return res.status(400).json({ error: "Missing user data or messageText" });
    }
 
     try {
       const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
-      if (messageText === "/start") {
-        const message = `Hello ${first_name}, welcome to our bot!`;
+      if (message === "/start") {
+        const messageText = `Hello ${user.first_name}, welcome to our bot!`;
         const response = await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            chat_id: id,
-            text: message,
+            chat_id: user.id,
+            text: messageText,
           }),
         });
 

@@ -35,11 +35,20 @@ const LoginPage: React.FC = () => {
     }
 
    try {
-  const response = await fetch("/api/notify-user", {
+    const response = await fetch("/api/notify-user", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user, message: messageText}),
+    body: JSON.stringify({
+      user: {
+      id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name || "",
+      username: user.username || "",
+    },
+      message: messageText,
+    }),
   });
+
   const responseData = await response.json();
 console.log("Telegram Updates:", responseData);
   if (response.ok) {
@@ -78,19 +87,7 @@ console.log("Telegram Updates:", responseData);
         </div>
       )}
 
-      {/* <button onClick={() => handleTelegramAuth(
-        {
-          id: 0, // Replace with your chat ID
-          first_name: "John Doe", // Replace with your first name
-          last_name: "Doe",
-          username: "john_doe",
-          photo_url: "https://example.com/profile_photo.jpg",
-          auth_date: Date.now() / 1000,
-          hash: "abc123",
-        }
-      )}>
-        click me
-      </button> */}
+    
     </div>
   );
 };
